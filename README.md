@@ -49,7 +49,7 @@ Javascript library to work with Decent blockchain network.
     
 Replace `decent_network_wspaths` with active decent daemon instance and `chain_id` with blockchain id which
 you are about to work on.
-[Init example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/Init)
+<!-- [Init example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/Init) -->
 
 ## Usage
 
@@ -77,7 +77,7 @@ Once Decent lib is initialized, you can access methods using `Decent.instance().
         });
 
 Replace all variables with your values to get requested content.
-[Search example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/SearchContent)
+<!-- [Search example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/SearchContent) -->
 
 
 ## Buy content method
@@ -102,16 +102,17 @@ Replace all variables with your values to get requested content.
        
 Replace variables with keys from your decent account to buy content. Otherwise you will not be 
 able to buy content. Private key must be in WIF(Wallet Import Format).
-[Buy example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/BuyContent)
+<!-- [Buy example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/BuyContent) -->
 
 ## Download/Restore content method
 Method `restoreContentKeys` will restore your key generated during content submission, used to encrypt content. 
 
     const elGammalPrivate = '32983749287349872934792739472387492387492834';
     const contentId = '1.2.312';
+    const accountId = '1.2.312';
     
     // Content key restoration
-    Decent.core.content.restoreContentKeys(contentId, elGammalPrivate)
+    Decent.core.content.restoreContentKeys(contentId, accountId, elGammalPrivate)
         .then(key => {
             // ... now you are able to decrypt your content
         })
@@ -119,7 +120,7 @@ Method `restoreContentKeys` will restore your key generated during content submi
             // error restoring key
         });
         
-[Download example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/DownloadContent)
+<!-- [Download example](https://github.com/DECENTfoundation/decent-js/tree/master/examples/DownloadContent) -->
 
 
 ## All available methods
@@ -128,22 +129,17 @@ Method `restoreContentKeys` will restore your key generated during content submi
 
     searchContent(searchParams: SearchParams): Promise<Content[]> 
     getContent(id: string): Promise<Content> 
-    removeContent(URI: string, authorId: string,
-    privateKey: string): Promise<any> 
-    restoreContentKeys(contentId: String,
-    elGammalPrivate: string): Promise<string> 
+    removeContent(contentId: string, authorId: string, privateKey: string): Promise<void> 
+    restoreContentKeys(contentId: String, accountId: string, ...elGammalPrivate: KeyPair): Promise<string> 
     generateContentKeys(seeders: string[]): Promise<any> 
-    addContent(content: SubmitObject, privateKey: string,
-    publicKey: string): Promise<any> 
-    buyContent(contentId: string, buyerId: string,
-    elGammalPub: string, privateKey: string, pubKey: string): Promise<any> 
+    addContent(content: SubmitObject, privateKey: string): Promise<void> 
+    buyContent(contentId: string, buyerId: string, elGammalPub: string, privateKey: string): Promise<void> 
     
 ### Account
 
     getAccountByName(name: string): Promise<Account> 
     getAccountById(id: string): Promise<Account> 
-    getTransactionHistory(accountName: string): Promise<Transaction[]> 
-    transfer(amount: number, fromAccount: string, toAccount: string,
-    memo: string, privateKey: string): Promise<any> 
-    getBalance(account: string): Promise<number> 
+    getTransactionHistory(accountId: string, privateKeys: string[], order: string = SearchAccountHistoryOrder.timeDesc, startObjectId: string = '0.0.0', resultLimit: number = 100): Promise<Transaction[]> 
+    transfer(amount: number, fromAccount: string, toAccount: string, memo: string, privateKey: string): Promise<void> 
+    getBalance(accountId: string): Promise<number> 
 
